@@ -1,0 +1,435 @@
+/* ============================================================
+   CHAPTER MAP — chapter.css
+   Dynamic theme system — semua warna ikut --tema dari DB
+   --tema diset via <style> di PHP: :root { --tema: #4A90B8; }
+   ============================================================ */
+
+:root {
+  /* --tema dioverride per chapter dari PHP */
+  --tema: #4A90B8;
+
+  /* Semua turunan warna dari --tema */
+  --bg-lightest: color-mix(in srgb, var(--tema) 18%, white);
+  --bg-light:    color-mix(in srgb, var(--tema) 28%, white);
+  --bg-mid:      color-mix(in srgb, var(--tema) 42%, white);
+  --bg-deep:     color-mix(in srgb, var(--tema) 58%, white);
+
+  --surface:     color-mix(in srgb, white 72%, var(--tema));
+  --surface-hv:  color-mix(in srgb, white 85%, var(--tema));
+  --border:      color-mix(in srgb, white 75%, var(--tema));
+  --border-hv:   color-mix(in srgb, white 92%, var(--tema));
+
+  --text-main:   color-mix(in srgb, var(--tema) 80%, #000);
+  --text-mid:    color-mix(in srgb, var(--tema) 60%, #111);
+  --text-dim:    color-mix(in srgb, var(--tema) 45%, #222);
+
+  --accent:      color-mix(in srgb, var(--tema) 85%, #000);
+  --accent-glow: color-mix(in srgb, var(--tema) 70%, white);
+
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body:    'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  min-height: 100%;
+  color: var(--text-main);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  background: linear-gradient(160deg,
+    var(--bg-lightest) 0%,
+    var(--bg-light)    35%,
+    var(--bg-mid)      65%,
+    var(--bg-deep)     100%);
+  background-attachment: fixed;
+}
+
+/* Noise texture premium */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* Light reflection atas */
+body::after {
+  content: '';
+  position: fixed; top: 0; left: 0; right: 0; height: 50vh; z-index: 0;
+  background: radial-gradient(ellipse at 50% 0%,
+    rgba(255,255,255,0.4) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+/* ── BUBBLE CANVAS ───────────────────────────────────────── */
+#deco-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1; /* Di atas background marble, tapi di bawah teks konten */
+    pointer-events: none; /* Penting! Biar map dan tombol di bawahnya tetep bisa diklik */
+}
+
+/* Pastikan konten utama memiliki z-index lebih tinggi agar tidak tertutup */
+.ch-header, .track-wrapper, .nav, .guest-bar {
+    position: relative;
+    z-index: 2;
+}
+
+/* ── MARBLE DEKORATIF ────────────────────────────────────── */
+.marble {
+  position: fixed; z-index: 1; pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 32%,
+    rgba(255,255,255,0.92),
+    color-mix(in srgb, var(--tema) 45%, white) 40%,
+    color-mix(in srgb, var(--tema) 70%, #000) 80%,
+    color-mix(in srgb, var(--tema) 85%, #000));
+  box-shadow:
+    inset -3px -3px 6px rgba(0,0,0,0.08),
+    inset 3px 3px 6px rgba(255,255,255,0.7),
+    0 4px 16px color-mix(in srgb, var(--tema) 30%, transparent);
+  animation: marbleFloat ease-in-out infinite;
+}
+.marble-1 { width:18px; height:18px; top:15%; left:8%;   animation-duration:7s;  animation-delay:0s;   }
+.marble-2 { width:12px; height:12px; top:40%; right:6%;  animation-duration:9s;  animation-delay:1s;   }
+.marble-3 { width:22px; height:22px; top:70%; left:5%;   animation-duration:11s; animation-delay:2s;   }
+.marble-4 { width:10px; height:10px; top:25%; right:12%; animation-duration:8s;  animation-delay:3s;   }
+.marble-5 { width:16px; height:16px; top:80%; right:8%;  animation-duration:10s; animation-delay:0.5s; }
+
+@keyframes marbleFloat {
+  0%,100% { transform: translateY(0) rotate(0deg);    }
+  33%     { transform: translateY(-12px) rotate(120deg); }
+  66%     { transform: translateY(-6px) rotate(240deg);  }
+}
+
+/* ── NAVBAR ──────────────────────────────────────────────── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 2rem;
+  background: color-mix(in srgb, var(--bg-lightest) 85%, transparent);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-brand {
+  font-family: var(--font-display); font-size: 1.1rem;
+  color: var(--text-main); text-decoration: none; letter-spacing: 0.08em;
+}
+.nav-links { display: flex; gap: 1.5rem; align-items: center; }
+.nav-links a {
+  font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-mid); text-decoration: none;
+  font-weight: 500; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent); }
+
+/* ── CHAPTER HEADER ──────────────────────────────────────── */
+.ch-header {
+  position: relative; z-index: 2;
+  text-align: center;
+  padding: 6.5rem 2rem 2.5rem;
+  animation: fadeUp 0.7s ease forwards;
+}
+.ch-header::before {
+  content: '';
+  position: absolute; top: 40%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px; height: 250px;
+  background: radial-gradient(ellipse,
+    rgba(255,255,255,0.35) 0%, transparent 65%);
+  pointer-events: none;
+}
+.ch-label {
+  font-size: 0.68rem; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 0.8rem; font-weight: 600;
+}
+.ch-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-weight: 300; line-height: 1.1;
+  color: var(--text-main);
+  margin-bottom: 0.8rem;
+  text-shadow: 0 2px 16px rgba(255,255,255,0.6);
+}
+.ch-desc {
+  font-family: var(--font-display); font-style: italic;
+  font-size: 1rem; color: var(--text-mid); opacity: 0.8;
+  max-width: 520px; margin: 0 auto 1.5rem; line-height: 1.6;
+}
+
+/* Divider */
+.ch-divider {
+  display: flex; align-items: center; gap: 0.8rem;
+  justify-content: center; margin: 1.2rem 0;
+}
+.ch-divider-line {
+  width: 50px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent));
+}
+.ch-divider-line:last-child {
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+.ch-divider-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent); opacity: 0.65;
+}
+
+/* Progress */
+.ch-progress {
+  display: inline-flex; align-items: center; gap: 0.8rem; margin-top: 0.5rem;
+}
+.ch-progress-track {
+  width: 140px; height: 3px;
+  background: color-mix(in srgb, white 60%, var(--tema));
+  border-radius: 2px; overflow: hidden;
+}
+.ch-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-glow));
+  border-radius: 2px; transition: width 0.8s ease;
+}
+.ch-progress-label {
+  font-size: 0.68rem; letter-spacing: 0.1em;
+  color: var(--text-mid); font-weight: 500;
+}
+
+/* ── TRACK WRAPPER ───────────────────────────────────────── */
+.track-wrapper {
+  position: relative; 
+  z-index: 2;
+  padding: 0.5rem 1.5rem 6rem;
+  max-width: 840px; 
+  margin: 0 auto;
+  min-height: 50vh; /* Tambahkan ini sebagai pengaman tinggi halaman saat track kosong */
+}
+
+.track-journey {
+  display: flex; flex-direction: column; align-items: center;
+}
+
+/* ── TRACK STOP ──────────────────────────────────────────── */
+.track-stop {
+  position: relative; width: 100%;
+  display: flex; align-items: center; min-height: 110px;
+}
+.track-stop.left  { flex-direction: row; }
+.track-stop.right { flex-direction: row-reverse; }
+
+/* ── CONNECTOR ───────────────────────────────────────────── */
+.track-connector {
+  position: absolute; top: -48px; left: 50%; transform: translateX(-50%);
+  width: 2px; height: 48px;
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--tema) 15%, transparent) 0%,
+    color-mix(in srgb, var(--tema) 30%, transparent) 100%);
+}
+.track-connector.lit {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--accent) 45%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 75%, transparent) 100%);
+}
+
+/* ── NODE ────────────────────────────────────────────────── */
+.track-node {
+  flex-shrink: 0; width: 68px;
+  display: flex; justify-content: center; align-items: center; z-index: 2;
+}
+.node-ring {
+  width: 48px; height: 48px; border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  background: color-mix(in srgb, white 65%, var(--tema));
+  backdrop-filter: blur(8px);
+  transition: all 0.3s;
+}
+.track-stop.done .node-ring {
+  border-color: var(--accent);
+  background: color-mix(in srgb, white 75%, var(--tema));
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--tema) 15%, transparent),
+    0 4px 12px color-mix(in srgb, var(--tema) 25%, transparent);
+}
+.track-stop.current .node-ring {
+  border-color: var(--accent);
+  background: color-mix(in srgb, white 82%, var(--tema));
+  box-shadow:
+    0 0 0 5px color-mix(in srgb, var(--tema) 20%, transparent),
+    0 0 0 10px color-mix(in srgb, var(--tema) 08%, transparent),
+    0 4px 20px color-mix(in srgb, var(--tema) 35%, transparent);
+  animation: pulse 2.5s ease-in-out infinite;
+}
+.track-stop.locked .node-ring {
+  border-color: color-mix(in srgb, white 55%, var(--tema));
+  background: color-mix(in srgb, white 50%, var(--tema));
+  opacity: 0.5;
+}
+
+.node-dot {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: color-mix(in srgb, var(--tema) 12%, transparent);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent);
+  font-family: var(--font-display); font-size: 0.9rem;
+}
+.node-dot svg { width: 14px; height: 14px; }
+.track-stop.locked .node-dot {
+  color: color-mix(in srgb, var(--accent) 35%, white);
+}
+
+@keyframes pulse {
+  0%,100% {
+    box-shadow:
+      0 0 0 5px color-mix(in srgb, var(--tema) 20%, transparent),
+      0 0 0 10px color-mix(in srgb, var(--tema) 08%, transparent),
+      0 4px 20px color-mix(in srgb, var(--tema) 35%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 0 0 8px color-mix(in srgb, var(--tema) 25%, transparent),
+      0 0 0 16px color-mix(in srgb, var(--tema) 10%, transparent),
+      0 4px 28px color-mix(in srgb, var(--tema) 45%, transparent);
+  }
+}
+
+/* ── TRACK CARD ──────────────────────────────────────────── */
+.track-card {
+  flex: 1; position: relative; overflow: hidden;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, white 58%, var(--tema));
+  backdrop-filter: blur(16px);
+  transition: all 0.3s; margin: 0.9rem 0;
+  border-radius: 2px;
+}
+.track-stop.left  .track-card { margin-left: 1rem; }
+.track-stop.right .track-card { margin-right: 1rem; }
+
+.track-stop.current .track-card {
+  border-color: color-mix(in srgb, white 85%, var(--tema));
+  background: color-mix(in srgb, white 72%, var(--tema));
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--tema) 15%, transparent);
+}
+.track-stop.done .track-card {
+  background: color-mix(in srgb, white 50%, var(--tema));
+}
+.track-stop.locked .track-card {
+  opacity: 0.42;
+  background: color-mix(in srgb, white 45%, var(--tema));
+}
+.track-stop:not(.locked) .track-card:hover {
+  border-color: var(--border-hv);
+  background: color-mix(in srgb, white 78%, var(--tema));
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px color-mix(in srgb, var(--tema) 18%, transparent);
+}
+
+/* Top accent line */
+.track-card-accent {
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg,
+    transparent,
+    color-mix(in srgb, var(--accent) 60%, white),
+    rgba(255,255,255,0.9),
+    color-mix(in srgb, var(--accent) 60%, white),
+    transparent);
+}
+.track-stop.locked .track-card-accent { opacity: 0.2; }
+
+.track-card-inner { padding: 1.2rem 1.4rem 1.2rem 1.6rem; }
+
+.track-meta {
+  display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem;
+}
+.track-num-label {
+  font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--text-dim); font-weight: 600;
+}
+.track-mood {
+  font-size: 0.56rem; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.15rem 0.55rem; border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  color: var(--accent);
+  background: color-mix(in srgb, white 60%, var(--tema));
+}
+
+.track-title {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  font-weight: 400; color: var(--text-main);
+  margin-bottom: 0.8rem; line-height: 1.2;
+}
+.track-stop.locked .track-title { color: var(--text-dim); opacity: 0.65; }
+
+.track-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em;
+  text-transform: uppercase; text-decoration: none;
+  color: var(--accent);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  padding-bottom: 2px; transition: all 0.2s;
+}
+.track-btn svg { width: 11px; height: 11px; transition: transform 0.2s; }
+.track-btn:hover {
+  color: color-mix(in srgb, var(--accent) 80%, #000);
+  border-color: var(--accent);
+}
+.track-btn:hover svg { transform: translateX(3px); }
+
+.track-locked-note {
+  font-size: 0.7rem; color: var(--text-dim);
+  font-style: italic; opacity: 0.6;
+}
+
+/* ── JOURNEY END ─────────────────────────────────────────── */
+.track-end {
+  margin-top: 3rem; text-align: center; opacity: 0.4;
+}
+.end-icon {
+  font-size: 1.3rem; color: var(--accent);
+  margin-bottom: 0.4rem; display: inline-block;
+  animation: spin 8s linear infinite;
+}
+.track-end p {
+  font-family: var(--font-display); font-style: italic;
+  font-size: 0.85rem; color: var(--text-mid);
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── GUEST BAR ───────────────────────────────────────────── */
+.guest-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+  text-align: center; padding: 0.85rem;
+  background: color-mix(in srgb, var(--bg-lightest) 90%, transparent);
+  border-top: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  font-size: 0.78rem; color: var(--text-mid);
+}
+.guest-bar a {
+  color: var(--accent); text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  transition: color 0.2s;
+}
+.guest-bar a:hover { color: color-mix(in srgb, var(--accent) 80%, #000); }
+
+/* ── ANIMATIONS ──────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .nav { padding: 1rem 1.2rem; }
+  .ch-header { padding: 5.5rem 1.2rem 2rem; }
+  .track-stop.left,
+  .track-stop.right { flex-direction: column; align-items: flex-start; }
+  .track-node { width: 100%; justify-content: flex-start; padding-left: 0.5rem; }
+  .track-card { margin: 0.5rem 0 0 0 !important; width: 100%; }
+  .track-connector { left: 1.5rem; transform: none; }
+}

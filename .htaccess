@@ -1,0 +1,11 @@
+Options -Indexes
+
+RewriteEngine On
+RewriteBase /SetlistJourney/
+
+# Biarkan file/folder statis lewat langsung
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Semua request → index.php
+RewriteRule ^(.*)$ index.php [QSA,L]
