@@ -1,23 +1,27 @@
-# SetlistJourney
+# SetlistJourney2
 
-**SetlistJourney** adalah web app gamifikasi bertema *musical journey* — pengguna menjelajahi **World Map**, membuka **Chapter** (babak/album) satu per satu, mendengarkan cerita tiap **Track** (lagu), menyelesaikan **Quest** (trivia/tebak lirik) untuk membuka track berikutnya, menemukan **Milestone** (momen spesial) di sepanjang jalan, dan menutup tiap chapter dengan menulis pesan di **Guestbook**.
+**SetlistJourney2** adalah web app gamifikasi bertema *musical journey* — pengguna menjelajahi **World Map**, membuka **Chapter** (babak/album) satu per satu, mendengarkan cerita tiap **Track** (lagu), menyelesaikan **Quest** (trivia/tebak lirik) untuk membuka track berikutnya, menemukan **Milestone** (momen spesial) di sepanjang jalan, dan menutup tiap chapter dengan menulis pesan di **Guestbook**.
 
 Dibangun dengan **PHP native (tanpa framework)** menggunakan pola MVC sederhana buatan sendiri (`core/Router.php`, `core/Controller.php`, `core/Model.php`, `core/Session.php`).
 
-> ⚠️ Karena ini pure PHP native (bukan hosted), project ini **hanya bisa dilihat/dicoba dengan cara di-download dan dijalankan di local**. Ikuti panduan instalasi di bawah.
+## Live Demo
+
+Coba langsung tanpa perlu install di local: https://setlistjourney.lovestoblog.com/
+
+Kalau ingin lihat/edit source code atau jalankan di local sendiri, ikuti panduan instalasi di bawah.
 
 ---
 
 ## Fitur
 
-- 🔐 Autentikasi user (register/login/logout) dengan `password_hash`/`password_verify`
-- 🗺️ World Map — progres eksplorasi chapter per user
-- 📖 Chapter & Track dengan mood, deskripsi, trivia, dan petikan lirik
-- 🧩 Quest per track (trivia / tebak lirik / decode cipher) yang mengunci track selanjutnya sampai terjawab
-- 🏆 Milestone — reward/cerita tambahan setelah track tertentu
-- 📝 Guestbook di tiap penutup chapter (final stage)
-- 🛠️ Panel Admin: kelola Chapter, Track, Quest, Milestone, User, dan Guestbook
-- 🧭 Router custom dengan dukungan parameter dinamis (`/chapter/:slug`, `/track/:id`, dst.)
+- Autentikasi user (register/login/logout) dengan `password_hash`/`password_verify`
+- World Map — progres eksplorasi chapter per user
+- Chapter & Track dengan mood, deskripsi, trivia, dan petikan lirik
+- Quest per track (trivia / tebak lirik / decode cipher) yang mengunci track selanjutnya sampai terjawab
+- Milestone — reward/cerita tambahan setelah track tertentu
+- Guestbook di tiap penutup chapter (final stage)
+- Panel Admin: kelola Chapter, Track, Quest, Milestone, User, dan Guestbook
+- Router custom dengan dukungan parameter dinamis (`/chapter/:slug`, `/track/:id`, dst.)
 
 ---
 
@@ -41,12 +45,11 @@ SetlistJourney2/
 ├── config/
 │   └── database.php     # Konfigurasi koneksi database (PDO)
 ├── core/                # Router, Controller, Model, Session (mini-framework)
-├── database/
-│   └── schema.sql       # Struktur tabel database (lihat catatan di bawah)
 ├── public/
 │   └── assets/          # CSS & JS
 ├── .htaccess
-└── index.php            # Entry point / bootstrap
+├── index.php            # Entry point / bootstrap
+└── setlist_journey1.sql       # Struktur tabel database (lihat catatan di bawah)
 ```
 
 ---
@@ -54,9 +57,9 @@ SetlistJourney2/
 ## Instalasi & Menjalankan di Local
 
 ### Prasyarat
-- PHP **8.0+** (pakai fitur typed property & union return type)
+- PHP 8.0+ (pakai fitur typed property & union return type)
 - MySQL / MariaDB
-- Apache dengan `mod_rewrite` aktif (disarankan **XAMPP** / **Laragon**)
+- Apache dengan `mod_rewrite` aktif (disarankan XAMPP / Laragon)
 
 ### Langkah-langkah
 
@@ -69,9 +72,9 @@ SetlistJourney2/
 2. **Buat database** lalu import schema-nya:
    ```bash
    mysql -u root -p -e "CREATE DATABASE setlist_journey1"
-   mysql -u root -p setlist_journey1 < database/schema.sql
+   mysql -u root -p setlist_journey1 < setlist_journey1.sql
    ```
-   > **Catatan:** `database/schema.sql` disusun ulang dari query-query di `app/models` & `app/controllers` (dump SQL asli tidak disertakan di project ini). Sesuaikan/tambahkan data chapter, track, quest, dsb. lewat panel admin setelah setup.
+   Catatan: `setlist_journey1.sql` disusun ulang dari query-query di `app/models` & `app/controllers` (dump SQL asli tidak disertakan di project ini). Sesuaikan/tambahkan data chapter, track, quest, dsb. lewat panel admin setelah setup.
 
 3. **Sesuaikan koneksi database** di `config/database.php` kalau username/password MySQL kamu berbeda dari default (`root` / tanpa password):
    ```php
@@ -106,7 +109,7 @@ SetlistJourney2/
 
 ---
 
-## 🗺️ Alur Utama Aplikasi
+## Alur Utama Aplikasi
 
 ```
 Register/Login → World Map → pilih Chapter → baca Track
@@ -118,14 +121,9 @@ Admin mengatur seluruh konten (chapter, track, quest, milestone) lewat `/admin`,
 
 ---
 
-## 📌 Catatan
+## Catatan
 
 - Ini project pembelajaran/personal, dibuat pure PHP native tanpa framework — cocok buat yang mau lihat implementasi MVC dari nol.
-- Karena tidak di-hosting, satu-satunya cara melihat aplikasinya jalan adalah dengan clone & run di local sesuai langkah di atas.
-- Kontribusi/issue silakan dibuka lewat tab **Issues** di repo ini.
+- Kontribusi/issue silakan dibuka lewat tab Issues di repo ini.
 
 ---
-
-## 📄 Lisensi
-
-Belum ada lisensi resmi — tambahkan file `LICENSE` kalau ingin project ini open source secara formal (misalnya MIT).
