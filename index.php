@@ -1,5 +1,7 @@
 <?php
 
+ob_start();
+
 // ── Autoload & bootstrap ──────────────────────────────────────
 define('BASE_PATH', is_dir(__DIR__ . '/app') ? __DIR__ : dirname(__DIR__));
 // Taruh setelah define BASE_PATH

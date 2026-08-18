@@ -121,7 +121,7 @@ $temaWarna  = htmlspecialchars($chapter['tema_warna'] ?? '#4A90B8');
 
       <?php if ($success ?? null): ?>
         <div class="success-alert">
-          ✅ <?= htmlspecialchars($success) ?>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="width:14px;height:14px;vertical-align:-2px;margin-right:5px"><path d="M5 13l4 4L19 7"/></svg><?= htmlspecialchars($success) ?>
         </div>
       <?php endif; ?>
 

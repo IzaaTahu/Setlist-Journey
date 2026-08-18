@@ -86,7 +86,7 @@ $isBacaLore   = $hasQuest && $quest['tipe'] === 'baca_lore';
       <!-- Note khusus baca_lore -->
       <?php if ($isBacaLore): ?>
         <div class="baca-lore-note">
-          <span class="note-icon">📖</span>
+          <span class="note-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></span>
           <p>Baca lore<?= $hasTrivia ? ' dan trivia' : '' ?> dengan seksama sebelum melanjutkan. Akan ada countdown setelah kamu siap mulai membaca.</p>
         </div>
       <?php endif; ?>
@@ -183,7 +183,7 @@ $isBacaLore   = $hasQuest && $quest['tipe'] === 'baca_lore';
         <div class="divider-line"></div>
       </div>
       <div class="trivia-card">
-        <span class="trivia-icon">💡</span>
+        <span class="trivia-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18h6M10 21.5h4M12 2a7 7 0 00-4 12.7c.6.5 1 1.3 1 2.1v.2h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0012 2z"/></svg></span>
         <p class="trivia-text"><?= nl2br(htmlspecialchars($track['trivia'])) ?></p>
       </div>
 
@@ -232,7 +232,9 @@ $isBacaLore   = $hasQuest && $quest['tipe'] === 'baca_lore';
   <?php if ($milestone): ?>
   <div class="milestone-overlay" id="milestoneOverlay" style="display:none">
     <div class="milestone-card">
-      <div class="milestone-badge">🎉</div>
+      <div class="milestone-badge">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 5.8L19.5 9l-5.7 1.6L12 16l-1.8-5.4L4.5 9l5.7-1.2L12 2z"/></svg>
+      </div>
       <h3 class="milestone-title"><?= htmlspecialchars($milestone['judul']) ?></h3>
       <?php if ($milestone['foto']): ?>
         <img src="<?= htmlspecialchars($milestone['foto']) ?>" alt="milestone" class="milestone-img">
@@ -248,7 +250,7 @@ $isBacaLore   = $hasQuest && $quest['tipe'] === 'baca_lore';
   <div class="quest-overlay" id="questOverlay" style="display:none">
     <div class="quest-card">
       <div class="quest-header">
-        <span class="quest-badge">🎯 Quest</span>
+        <span class="quest-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:0.8em;height:0.8em;vertical-align:-0.05em;margin-right:2px"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></svg>Quest</span>
         <span class="quest-tipe"><?= htmlspecialchars(str_replace('_', ' ', $quest['tipe'])) ?></span>
       </div>
       <p class="quest-pertanyaan"><?= htmlspecialchars($quest['pertanyaan']) ?></p>
@@ -278,7 +280,9 @@ $isBacaLore   = $hasQuest && $quest['tipe'] === 'baca_lore';
       <?php elseif ($quest['tipe'] === 'easter_egg'): ?>
         <div class="easter-egg-area" id="easterEggArea">
           <div class="easter-egg-hint">Klik di area ini untuk menemukan sesuatu...</div>
-          <div class="easter-egg-hidden" id="easterTarget">✨</div>
+          <div class="easter-egg-hidden" id="easterTarget">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 5.8L19.5 9l-5.7 1.6L12 16l-1.8-5.4L4.5 9l5.7-1.2L12 2z"/></svg>
+        </div>
         </div>
       <?php endif; ?>
 

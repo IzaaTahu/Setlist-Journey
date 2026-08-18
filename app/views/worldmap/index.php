@@ -22,7 +22,7 @@ $userName   = Session::get('user_nama');
     <a href="<?= url('') ?>" class="nav-brand">Setlist Journey</a>
     <div class="nav-links">
       <?php if ($isLoggedIn): ?>
-        <span class="nav-user">👤 <?= htmlspecialchars($userName) ?></span>
+        <span class="nav-user"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:12px;height:12px;vertical-align:-1px;margin-right:3px"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0116 0v1"/></svg><?= htmlspecialchars($userName) ?></span>
         <a href="<?= url('logout') ?>">Logout</a>
       <?php else: ?>
         <a href="<?= url('login') ?>">Login</a>
@@ -113,7 +113,7 @@ $userName   = Session::get('user_nama');
               </a>
             <?php else: ?>
               <p class="card-locked-note">
-                <?= $isLoggedIn ? '🔒 Selesaikan chapter sebelumnya' : '🔒 Login & selesaikan chapter sebelumnya' ?>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:11px;height:11px;vertical-align:-1px;margin-right:4px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><?= $isLoggedIn ? 'Selesaikan chapter sebelumnya' : 'Login & selesaikan chapter sebelumnya' ?>
               </p>
             <?php endif; ?>
 

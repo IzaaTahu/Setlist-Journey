@@ -203,9 +203,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ── Submit ke server ─────────────────────────────────────
+  // ── Submit ke server ───────────────────────
+  const wrongMessages = [
+    'Belum tepat, coba lagi!',
+    'Hampir! Tapi belum itu jawabannya.',
+    'Bukan itu... coba tebakan lain?',
+    'Meleset dikit, semangat coba lagi!',
+  ];
+
+  function shakeEl(el) {
+    if (!el) return;
+    el.classList.remove('shake');
+    void el.offsetWidth;
+    el.classList.add('shake');
+  }
+
   async function submitQuest(jawaban, optionEl = null) {
-    const resultEl = document.getElementById('questResult');
+    const resultEl  = document.getElementById('questResult');
+    const questCard = document.querySelector('.quest-card') || document.querySelector('.quest-popup');
 
     if (!questId || !trackId || !submitUrl) {
       window.location.href = nextUrl || '/';
@@ -219,30 +234,65 @@ document.addEventListener('DOMContentLoaded', () => {
         body:    new URLSearchParams({ quest_id: questId, track_id: trackId, jawaban }),
       });
 
+      if (!res.ok) {
+        throw new Error('Server merespons dengan error ' + res.status);
+      }
+
       const data = await res.json();
 
+      if (!data.success) {
+        throw new Error(data.message || 'Respons server tidak valid.');
+      }
+
       if (data.is_correct === false) {
-        if (optionEl) optionEl.classList.add('wrong');
-        if (resultEl) { resultEl.className = 'quest-result wrong'; resultEl.textContent = '❌ Kurang tepat. Coba lagi!'; }
+        if (optionEl) { optionEl.classList.add('wrong'); shakeEl(optionEl); }
+        shakeEl(questCard);
+        if (resultEl) {
+          const msg = wrongMessages[Math.floor(Math.random() * wrongMessages.length)];
+          resultEl.className   = 'quest-result wrong';
+          resultEl.textContent = msg;
+        }
         setTimeout(() => {
-          document.querySelectorAll('.quest-option-btn').forEach(b => b.disabled = false);
-          if (resultEl) resultEl.textContent = '';
-        }, 1500);
+          document.querySelectorAll('.quest-option-btn').forEach(b => {
+            b.disabled = false;
+            b.classList.remove('wrong');
+          });
+          if (resultEl) { resultEl.textContent = ''; resultEl.className = 'quest-result'; }
+        }, 1600);
         return;
       }
 
       if (optionEl) optionEl.classList.add('correct');
       if (resultEl) {
         resultEl.className   = 'quest-result correct';
-        resultEl.textContent = data.is_correct ? '✅ Benar! Menuju lagu berikutnya...' : '✅ Tersimpan! Menuju lagu berikutnya...';
+        resultEl.textContent = data.is_correct ? 'Benar! Menuju lagu berikutnya...' : 'Tersimpan! Menuju lagu berikutnya...';
       }
 
       setTimeout(() => { window.location.href = data.next_url || nextUrl; }, 1400);
 
     } catch (err) {
-      console.error('Quest error:', err);
-      setTimeout(() => { window.location.href = nextUrl; }, 800);
-    }
+  console.error('Quest error:', err);
+  document.querySelectorAll('.quest-option-btn').forEach(b => b.disabled = false);
+  
+  if (resultEl) {
+    // 1. Kumpulan kalimat salah yang universal dan bertema JKT48
+    const wrongMessages = [
+      "Yah, belum tepat! Oshi-mu nungguin jawaban yang benar, nih.",
+      "Wah, tebakanmu meleset! Yuk, fokus lagi dan kirim ulang jawabanmu.",
+      "Oops! Ritme kamu kurang pas. Tarik napas, lalu coba sekali lagi!",
+      "Tampaknya Fortune Cookie kamu belum bawa hoki. Coba tebak lagi!",
+      "Jawabanmu masih salah. Jangan menyerah, ayo push sampai all-out!",
+      "Kurang beruntung! Pikirkan lagi petunjuknya sebelum kirim jawaban."
+    ];
+
+    // 2. Acak indeks dari array di atas
+    const randomText = wrongMessages[Math.floor(Math.random() * wrongMessages.length)];
+
+    // 3. Masukkan ke element result
+    resultEl.className   = 'quest-result wrong';
+    resultEl.textContent = randomText;
   }
+}
+  } 
 
 });

@@ -428,49 +428,60 @@ html, body {
   margin-bottom: 3rem;
 }
 
-/* Feature cards */
-.features {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1.5rem;
-  margin-top: 4rem;
+/* Playbill — empat babak pengalaman, ditulis seperti program pertunjukan */
+.playbill-kicker {
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  text-align: center;
+  margin: 3.5rem 0 0.5rem;
 }
-.feature-card {
-  padding: 1.8rem 1.4rem;
-  border: 1px solid rgba(201,168,76,0.15);
-  background: rgba(201,168,76,0.03);
+.playbill {
+  margin-top: 1rem;
+  border-top: 1px solid rgba(201,168,76,0.15);
+}
+.playbill-row {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  padding: 1.7rem 0.5rem;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
   text-align: left;
-  position: relative;
-  overflow: hidden;
-  transition: border-color 0.3s, background 0.3s;
+  transition: background 0.3s;
 }
-.feature-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 2px; height: 0;
-  background: var(--gold);
-  transition: height 0.4s ease;
-}
-.feature-card:hover {
-  border-color: rgba(201,168,76,0.35);
-  background: rgba(201,168,76,0.06);
-}
-.feature-card:hover::before { height: 100%; }
-.feature-icon { font-size: 1.4rem; margin-bottom: 1rem; display: block; }
-.feature-title {
+.playbill-row:hover { background: rgba(201,168,76,0.03); }
+.playbill-num {
+  flex-shrink: 0;
+  width: 44px;
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-style: italic;
+  font-size: 1.7rem;
+  font-weight: 400;
+  color: var(--gold-dim);
+  text-align: center;
+}
+.playbill-body { flex: 1; min-width: 0; }
+.playbill-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
   font-weight: 400;
   color: var(--cream);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
 }
-.feature-desc {
-  font-size: 0.8rem;
+.playbill-desc {
+  font-size: 0.82rem;
   color: var(--cream-dim);
+  opacity: 0.7;
   line-height: 1.6;
+}
+.playbill-icon {
+  flex-shrink: 0;
+  width: 26px; height: 26px;
+  color: var(--gold);
   opacity: 0.75;
 }
+.playbill-icon svg { width: 100%; height: 100%; }
 
 /* ── CTA BOTTOM ──────────────────────────────────────────── */
 .cta-bottom {
@@ -498,5 +509,7 @@ html, body {
 @media (max-width: 600px) {
   .nav { padding: 1rem 1.2rem; }
   .hero { padding: 1.2rem; }
-  .features { grid-template-columns: 1fr; }
+  .playbill-row { gap: 1rem; padding: 1.3rem 0.2rem; }
+  .playbill-num { width: 32px; font-size: 1.3rem; }
+  .playbill-icon { width: 20px; height: 20px; }
 }

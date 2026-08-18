@@ -159,6 +159,19 @@ body {
 .audio-btn svg { width: 14px; height: 14px; }
 .audio-label { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); }
 
+/* Baca-lore callout */
+.baca-lore-note {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  max-width: 520px; margin: 0 auto 2rem;
+  padding: 1rem 1.3rem;
+  background: var(--surface); backdrop-filter: blur(10px);
+  border: 1px solid var(--border); border-left: 3px solid var(--accent);
+  text-align: left;
+}
+.note-icon { flex-shrink: 0; color: var(--accent); margin-top: 2px; }
+.note-icon svg { width: 18px; height: 18px; }
+.baca-lore-note p { font-size: 0.85rem; line-height: 1.6; color: var(--text-mid); }
+
 /* ── DIVIDERS ────────────────────────────────────────────── */
 .intro-divider, .lore-divider {
   display: flex; align-items: center; gap: 0.8rem;
@@ -257,7 +270,8 @@ body {
   border: 1px solid var(--border); padding: 2rem;
   margin: 1.5rem 0; text-align: left; position: relative;
 }
-.trivia-icon { font-size: 1.5rem; display: block; margin-bottom: 1rem; }
+.trivia-icon { color: var(--accent); display: block; margin-bottom: 1rem; }
+.trivia-icon svg { width: 26px; height: 26px; }
 .trivia-text { font-size: 0.95rem; line-height: 1.85; color: var(--text-mid); }
 
 /* ── MILESTONE OVERLAY ───────────────────────────────────── */
@@ -274,7 +288,8 @@ body {
   text-align: center; position: relative;
   animation: scaleIn 0.4s ease forwards;
 }
-.milestone-badge { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+.milestone-badge { color: var(--accent); margin-bottom: 1rem; display: flex; justify-content: center; }
+.milestone-badge svg { width: 32px; height: 32px; }
 .milestone-title {
   font-family: var(--font-display); font-size: 1.8rem; font-weight: 300;
   color: var(--text-main); margin-bottom: 1rem;
@@ -308,6 +323,7 @@ body {
   display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.2rem;
 }
 .quest-badge {
+  display: inline-flex; align-items: center;
   font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em;
   text-transform: uppercase; color: var(--accent);
 }
@@ -382,10 +398,11 @@ body {
   font-size: 0.8rem; color: var(--text-dim); font-style: italic;
 }
 .easter-egg-hidden {
-  position: absolute; font-size: 1.5rem;
+  position: absolute; color: var(--accent);
   top: 20%; left: 75%; opacity: 0;
   transition: opacity 0.3s; pointer-events: none;
 }
+.easter-egg-hidden svg { width: 24px; height: 24px; }
 .easter-egg-area:hover .easter-egg-hidden { opacity: 0.15; }
 
 /* Timer */
@@ -400,9 +417,20 @@ body {
 .timer-label { font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.1em; }
 
 /* Quest result */
-.quest-result { margin-top: 1rem; font-size: 0.88rem; line-height: 1.5; }
+.quest-result { margin-top: 1rem; font-size: 0.88rem; line-height: 1.5; font-weight: 500; }
 .quest-result.correct { color: #166534; }
 .quest-result.wrong   { color: #991b1b; }
+.quest-result.wrong::before { content: '✕ '; font-weight: 700; }
+.quest-result.correct::before { content: '✓ '; font-weight: 700; }
+
+/* Fun feedback: shake on wrong answer */
+@keyframes shakeX {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-5px); }
+  40%, 60% { transform: translateX(5px); }
+}
+.shake { animation: shakeX 0.5s cubic-bezier(.36,.07,.19,.97) both; }
 
 /* ── ANIMATIONS ──────────────────────────────────────────── */
 @keyframes fadeUp {

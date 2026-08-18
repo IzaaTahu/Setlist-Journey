@@ -30,7 +30,7 @@
           </td>
           <td>
             <form method="POST" action="<?= url('admin/guestbook/' . $e['id_pesan'] . '/delete') ?>">
-              <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Hapus pesan ini?')">🗑️</button>
+              <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Hapus pesan ini?')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"/><path d="M10 11v6M14 11v6"/></svg></button>
             </form>
           </td>
         </tr>

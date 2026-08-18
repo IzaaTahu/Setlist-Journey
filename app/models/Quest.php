@@ -36,10 +36,13 @@ class Quest extends Model {
     }
 
     public function checkAnswer(int $questId, string $jawaban): bool {
-        // Untuk tipe trivia → cek di quest_options
+        // Untuk tipe trivia / tebak_lirik / decode_cipher → cek di quest_options
+        // Dibandingkan tanpa peduli spasi berlebih & besar-kecil huruf,
+        // supaya jawaban benar tidak salah ditandai gara-gara detail sepele.
         $stmt = $this->db->prepare(
             "SELECT COUNT(*) FROM quest_options
-             WHERE id_quest = ? AND teks_opsi = ? AND is_correct = 1"
+             WHERE id_quest = ? AND is_correct = 1
+             AND LOWER(TRIM(teks_opsi)) = LOWER(TRIM(?))"
         );
         $stmt->execute([$questId, $jawaban]);
         return (int)$stmt->fetchColumn() > 0;

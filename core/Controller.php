@@ -27,6 +27,9 @@ class Controller {
 }
 
     protected function json(mixed $data, int $code = 200): void {
+        if (ob_get_level() > 0) {
+            ob_clean();
+        }
         http_response_code($code);
         header('Content-Type: application/json');
         echo json_encode($data);

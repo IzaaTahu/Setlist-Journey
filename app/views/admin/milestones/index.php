@@ -40,7 +40,7 @@
     <?php if (empty($milestones)): ?>
       <div class="card">
         <div class="empty-state">
-          <span class="empty-state-icon">🏆</span>
+          <span class="empty-state-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 21h8M12 17v4"/><path d="M7 4h10v5a5 5 0 01-10 0V4z"/><path d="M7 5H4.5A2.5 2.5 0 007 9.5M17 5h2.5A2.5 2.5 0 0117 9.5"/></svg></span>
           <p class="empty-state-title">Belum ada milestone</p>
         </div>
       </div>
@@ -57,7 +57,7 @@
             <p style="font-size:0.82rem;color:var(--text-mid)"><?= htmlspecialchars($ms['pesan']) ?></p>
           </div>
           <form method="POST" action="<?= url('admin/milestones/' . $ms['id_milestone'] . '/delete') ?>">
-            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Hapus milestone ini?')">🗑️</button>
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Hapus milestone ini?')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"/><path d="M10 11v6M14 11v6"/></svg></button>
           </form>
         </div>
       </div>

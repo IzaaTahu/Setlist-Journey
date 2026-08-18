@@ -57,7 +57,7 @@
           <label class="form-label">Dekorasi Animasi</label>
           <select name="dekorasi" class="form-select">
             <?php
-            $dekOptions = ['none' => 'Tidak Ada', 'bubble' => '🫧 Bubble (Ramune)', 'confetti' => '🎊 Confetti (Pita)', 'fire' => '🔥 Fire (Api)'];
+            $dekOptions = ['none' => 'Tidak Ada', 'bubble' => 'Bubble (Ramune)', 'confetti' => 'Confetti (Pita)', 'fire' => 'Fire (Api)'];
             foreach ($dekOptions as $val => $label):
             ?>
               <option value="<?= $val ?>" <?= ($chapter['dekorasi'] ?? 'none') === $val ? 'selected' : '' ?>>

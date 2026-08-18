@@ -53,11 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const data = await res.json();
 
     if (data.is_correct === false) {
-      result.innerHTML = '<p class="wrong">❌ Jawaban kurang tepat, coba lagi!</p>';
+      result.innerHTML = '<p class="wrong">Jawaban kurang tepat, coba lagi.</p>';
       return;
     }
 
-    result.innerHTML = '<p class="correct">✅ Benar! Menuju lagu berikutnya...</p>';
+    result.innerHTML = '<p class="correct">Benar — menuju lagu berikutnya...</p>';
 
     setTimeout(() => {
       window.location.href = data.next_url;

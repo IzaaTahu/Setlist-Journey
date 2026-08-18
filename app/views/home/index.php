@@ -100,26 +100,58 @@ $isLoggedIn = isset($_SESSION['user_id']);
       <div class="divider-diamond"></div>
       <div class="divider-line"></div>
     </div>
-    <div class="features">
-      <div class="feature-card">
-        <span class="feature-icon">🗺️</span>
-        <p class="feature-title">Peta Interaktif</p>
-        <p class="feature-desc">Jelajahi tiap lagu lewat peta yang terbuka satu per satu.</p>
+    <p class="playbill-kicker">Empat Babak dalam Satu Pertunjukan</p>
+    <div class="playbill">
+      <div class="playbill-row">
+        <span class="playbill-num">I</span>
+        <div class="playbill-body">
+          <p class="playbill-title">Peta Interaktif</p>
+          <p class="playbill-desc">Jelajahi tiap lagu lewat peta yang terbuka satu per satu.</p>
+        </div>
+        <span class="playbill-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M9 4L4 6v14l5-2 6 2 5-2V4l-5 2-6-2z"/>
+            <path d="M9 4v14M15 6v14"/>
+          </svg>
+        </span>
       </div>
-      <div class="feature-card">
-        <span class="feature-icon">📖</span>
-        <p class="feature-title">Lore & Trivia</p>
-        <p class="feature-desc">Cerita dan fakta tersembunyi di balik setiap lagu.</p>
+      <div class="playbill-row">
+        <span class="playbill-num">II</span>
+        <div class="playbill-body">
+          <p class="playbill-title">Lore &amp; Trivia</p>
+          <p class="playbill-desc">Cerita dan fakta tersembunyi di balik setiap lagu.</p>
+        </div>
+        <span class="playbill-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+          </svg>
+        </span>
       </div>
-      <div class="feature-card">
-        <span class="feature-icon">🎯</span>
-        <p class="feature-title">Quest & Tantangan</p>
-        <p class="feature-desc">Selesaikan tantangan unik untuk membuka lagu berikutnya.</p>
+      <div class="playbill-row">
+        <span class="playbill-num">III</span>
+        <div class="playbill-body">
+          <p class="playbill-title">Quest &amp; Tantangan</p>
+          <p class="playbill-desc">Selesaikan tantangan unik untuk membuka lagu berikutnya.</p>
+        </div>
+        <span class="playbill-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+            <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>
       </div>
-      <div class="feature-card">
-        <span class="feature-icon">🏆</span>
-        <p class="feature-title">Milestone</p>
-        <p class="feature-desc">Hadiah kejutan di tengah perjalananmu.</p>
+      <div class="playbill-row">
+        <span class="playbill-num">IV</span>
+        <div class="playbill-body">
+          <p class="playbill-title">Milestone</p>
+          <p class="playbill-desc">Hadiah kejutan di tengah perjalananmu.</p>
+        </div>
+        <span class="playbill-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M8 21h8M12 17v4"/><path d="M7 4h10v5a5 5 0 01-10 0V4z"/>
+            <path d="M7 5H4.5A2.5 2.5 0 007 9.5M17 5h2.5A2.5 2.5 0 0117 9.5"/>
+          </svg>
+        </span>
       </div>
     </div>
   </section>

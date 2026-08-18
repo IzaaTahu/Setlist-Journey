@@ -94,17 +94,17 @@
       </div>
       <div class="topbar-right">
         <span class="topbar-user">
-          👤 <?= htmlspecialchars(Session::get('user_nama', 'Admin')) ?>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0116 0v1"/></svg><?= htmlspecialchars(Session::get('user_nama', 'Admin')) ?>
         </span>
       </div>
     </div>
 
     <!-- Flash messages -->
     <?php if ($flashSuccess = Session::flash('admin_success')): ?>
-      <div class="flash flash-success">✅ <?= htmlspecialchars($flashSuccess) ?></div>
+      <div class="flash flash-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="width:13px;height:13px;vertical-align:-1px;margin-right:4px"><path d="M5 13l4 4L19 7"/></svg><?= htmlspecialchars($flashSuccess) ?></div>
     <?php endif; ?>
     <?php if ($flashError = Session::flash('admin_error')): ?>
-      <div class="flash flash-error">❌ <?= htmlspecialchars($flashError) ?></div>
+      <div class="flash flash-error"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="width:13px;height:13px;vertical-align:-1px;margin-right:4px"><path d="M18 6L6 18M6 6l12 12"/></svg><?= htmlspecialchars($flashError) ?></div>
     <?php endif; ?>
 
     <!-- Page content -->

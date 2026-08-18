@@ -1,7 +1,7 @@
 Options -Indexes
 
 RewriteEngine On
-RewriteBase /SetlistJourney/
+RewriteBase /SetlistJourney2/
 
 # Biarkan file/folder statis lewat langsung
 RewriteCond %{REQUEST_FILENAME} !-f
